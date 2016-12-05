@@ -8,8 +8,8 @@
 #' @param type \code{character}. Currently available options are "MODIS"
 #' (default) and "GIMMS".
 #' @param ... Additional arguments passed to the underlying preprocessing
-#' functions for MODIS (\code{\link{processChainMODIS}}) and GIMMS
-#' \code{\link{processChainGIMMS}} depending on 'type'.
+#' functions for MODIS (\code{\link{preprocessMODIS}}) and GIMMS
+#' \code{\link{preprocessGIMMS}} depending on 'type'.
 #'
 #' @return
 #' A preprocessed \code{Raster*} object.
@@ -18,17 +18,17 @@
 #' Florian Detsch
 #'
 #' @seealso
-#' \code{\link{processChainMODIS}}, \code{\link{processChainGIMMS}}
+#' \code{\link{preprocessMODIS}}, \code{\link{preprocessGIMMS}}
 #'
-#' @export processChain
-#' @name processChain
-processChain <- function(type = c("MODIS", "GIMMS"),
+#' @export preprocess
+#' @name preprocess
+preprocess <- function(type = c("MODIS", "GIMMS"),
                          ...) {
 
   if (type[1] == "MODIS") {
-    processChainMODIS(...)
+    preprocessMODIS(...)
   } else if (type[1] == "GIMMS") {
-    processChainGIMMS(...)
+    preprocessGIMMS(...)
   } else {
     stop("Specified product not supported.\n")
   }

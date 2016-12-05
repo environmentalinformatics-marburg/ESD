@@ -13,8 +13,8 @@
 #' extracted, see \code{\link[raster]{crop}}.
 #' @param keep \code{integer}. Flag values of NDVI3g.v1 pixels to spare during
 #' quality control, see \code{\link{rasterizeGimms}}.
-#' @param fun \code{function}. Used to calculate monthly composite layers,
-#' defaults to \code{\link{max}}, see \code{\link{monthlyComposite}}.
+# #' @param fun \code{function}. Used to calculate monthly composite layers,
+# #' defaults to \code{\link{max}}, see \code{\link{monthlyComposite}}.
 #' @param lambda \code{character} or \code{integer}. Yearly lambda value passed
 #' to \code{\link{whittaker.raster}}.
 #' @param cores \code{integer}. Number of cores for parallel computing.
@@ -44,26 +44,23 @@
 #' ext <- raster::getData(country = "DEU", level = 0)
 #'
 #' ## initialize processing
-#' rst <- processChainGIMMS(ext = ext,
+#' rst <- preprocessGIMMS(ext = ext,
 #'                          keep = 0)  # keep pixels flagged 'good' only
 #'
 #' ## display the first 12 months (Jul 1981 to Jun 1982)
 #' raster::plot(rst[[1:12]])
 #' }
 #'
-#' @export processChainGIMMS
-#' @name processChainGIMMS
-processChainGIMMS <- function(dsn = getwd(),
+#' @export preprocessGIMMS
+#' @name preprocessGIMMS
+preprocessGIMMS <- function(dsn = getwd(),
                               ext = NULL,
                               keep = NULL,
-                              fun = max,
+                              # fun = max,
                               lambda = 5000,
-                              cores = parallel::detectCores() - 1,
+                              cores = 1L,
                               outDirPath = getwd(),
                               ...) {
-
-  ## download data
-  fls <- gimms::downloadGimms(version = 1L, dsn = dsn, cores = cores, ...)
 
   ## rasterize and apply quality control
   rst <- gimms::rasterizeGimms(fls, ext, keep = keep, cores = cores)

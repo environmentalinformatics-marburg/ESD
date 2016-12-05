@@ -21,9 +21,9 @@
 #' @seealso
 #' \code{\link{runGdal}}, \code{\link[raster]{crop}}.
 #'
-#' @export processChainMODIS
-#' @name processChainMODIS
-processChainMODIS <- function(dsn = getwd(),
+#' @export preprocessMODIS
+#' @name preprocessMODIS
+preprocessMODIS <- function(dsn = getwd(),
                               product = c("MOD13Q1", "MYD13Q1"),
                               ext = NULL,
                               cores = parallel::detectCores() - 1,
@@ -44,12 +44,7 @@ processChainMODIS <- function(dsn = getwd(),
   })
 
 
-  # ### download data -----
-  #
-  # for (i in product) {
-  #   MODIS::runGdal(product, collection = "006", ...)
-  # }
-
+  ### preprocessing -----
 
   ## loop over products
   lst_prd <- lapply(product, function(h) {
