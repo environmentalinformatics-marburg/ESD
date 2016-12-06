@@ -1,4 +1,4 @@
-plotPredictionStats <- function(reg_stats, rng = NULL, left = TRUE,
+plotRegressionStats <- function(reg_stats, rng = NULL, left = TRUE,
                                 add = FALSE, ...) {
 
   ## stop if supplied prediction statistics are not named
@@ -17,41 +17,41 @@ plotPredictionStats <- function(reg_stats, rng = NULL, left = TRUE,
   }
 
   panel.fun <- function(...) {
-    trellis.par.set("clip", list(panel = "off", strip = "off"))
+    lattice::trellis.par.set("clip", list(panel = "off", strip = "off"))
 
-    if (panel.number() == 1) {
-      panel.axis("top", at = seq(.8, 1, .1), outside = FALSE,
-                 labels = TRUE, half = FALSE, text.cex = .7,
-                 tck = .5)
-      panel.axis(side = "left", at = 1, outside = TRUE, tck = .5,
-                 labels = ifelse(left, expression("R"["T"]^2), FALSE), text.cex = .7)
-      panel.dotplot(lwd = .5, ...)
-      panel.abline(v = 1, lty = 3, lwd = 1, col = "red")
+    if (lattice::panel.number() == 1) {
+      lattice::panel.axis("top", at = seq(.7, 1, .1), outside = FALSE,
+                          labels = TRUE, half = FALSE, text.cex = .7,
+                          tck = .5)
+      lattice::panel.axis(side = "left", at = 1, outside = TRUE, tck = .5,
+                          labels = ifelse(left, expression("R"["T"]^2), FALSE), text.cex = .7)
+      lattice::panel.dotplot(lwd = .5, ...)
+      lattice::panel.abline(v = 1, lty = 3, lwd = 1, col = "red")
     }
 
-    if (panel.number() == 2) {
+    if (lattice::panel.number() == 2) {
       at <- pretty(rng)
-      panel.axis("bottom", at = at, outside = FALSE, tck = .5,
-                 labels = TRUE, half = FALSE, text.cex = .7)
-      panel.axis("left", at = 2:4, outside = TRUE, text.cex = .7, tck = .5,
-                 labels = if (left) {
+      lattice::panel.axis("bottom", at = at, outside = FALSE, tck = .5,
+                          labels = TRUE, half = FALSE, text.cex = .7)
+      lattice::panel.axis("left", at = 2:4, outside = TRUE, text.cex = .7, tck = .5,
+                          labels = if (left) {
                    c(expression("MAE"["T"]), expression("ME"["T"]),
                      expression("RMSE"["T"]))
                    } else {
                      FALSE
                    }, half = FALSE)
-      panel.abline(v = 0, lty = 3, lwd = 1, col = "red")
-      panel.lines(x = x_se[c(1, 5)], col = "grey60",
-                  y = y_se[c(1, 5)], lwd = 4)
-      panel.lines(x = x_se[c(2, 6)], col = "grey60",
-                  y = y_se[c(2, 6)], lwd = 4)
-      panel.lines(x = x_se[c(3, 7)], col = "grey60",
-                  y = y_se[c(3, 7)], lwd = 4)
-      panel.dotplot(..., lwd = 0.5)
-      panel.dotplot(x = df_plt$fit, y = df_plt$nms,
-                    cex = 1, col = "grey20", lwd = 0.5,
-                    col.line = "transparent", pch = ifelse(add, 21, 16),
-                    fill = ifelse(add, "white", "black"))
+      lattice::panel.abline(v = 0, lty = 3, lwd = 1, col = "red")
+      lattice::panel.lines(x = x_se[c(1, 5)], col = "grey60",
+                           y = y_se[c(1, 5)], lwd = 4)
+      lattice::panel.lines(x = x_se[c(2, 6)], col = "grey60",
+                           y = y_se[c(2, 6)], lwd = 4)
+      lattice::panel.lines(x = x_se[c(3, 7)], col = "grey60",
+                           y = y_se[c(3, 7)], lwd = 4)
+      lattice::panel.dotplot(..., lwd = 0.5)
+      lattice::panel.dotplot(x = df_plt$fit, y = df_plt$nms,
+                             cex = 1, col = "grey20", lwd = 0.5,
+                             col.line = "transparent", pch = ifelse(add, 21, 16),
+                             fill = ifelse(add, "white", "black"))
     }
   }
 
@@ -63,7 +63,7 @@ plotPredictionStats <- function(reg_stats, rng = NULL, left = TRUE,
 
   rsq_plt <- lattice::dotplot(nms ~ Rsq, data = df_rsq, pch = ifelse(add, 21, 16),
                      xlab = "", ylab = "", col.line = c("grey70", "transparent"),
-                     col = "grey20", xlim = c(0.675, 1.05),
+                     col = "grey20", xlim = c(0.625, 1.05),
                      scales = list(draw = FALSE),
                      cex = 1, as.table = TRUE,
                      par.settings = list(
