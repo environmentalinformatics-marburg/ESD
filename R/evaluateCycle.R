@@ -1,4 +1,4 @@
-#' Evaluate EOT-Based Spatial Resampling
+#' Evaluation Cycle of EOT-Based NDVI Resampling
 #'
 #' @description
 #' Evaluate the performance of EOT-based spatial resampling based on selected
@@ -36,9 +36,9 @@
 #' Kilimanjaro, Tanzania. Remote Sensing of Environment 178, 70-83,
 #' doi:10.1016/j.rse.2016.03.007.
 #'
-#' @export evaluateEOT
-#' @name evaluateEOT
-evaluateEOT <- function(pred,
+#' @export evaluateCycle
+#' @name evaluateCycle
+evaluateCycle <- function(pred,
                         resp,
                         training,
                         n = 10L,
@@ -91,7 +91,7 @@ evaluateEOT <- function(pred,
   tmp_me <- colMeans(tmp_val_prd - tmp_val_obs, na.rm = TRUE)
   tmp_mae <- colMeans(abs(tmp_val_prd - tmp_val_obs), na.rm = TRUE)
   tmp_rmse <- sqrt(colMeans((tmp_val_prd - tmp_val_obs)^2, na.rm = TRUE))
-  tmp_r <- diag(cor(tmp_val_prd, tmp_val_obs, use = "complete.obs"))
+  tmp_r <- diag(stats::cor(tmp_val_prd, tmp_val_obs, use = "complete.obs"))
   tmp_rsq <- tmp_r^2
 
   tmp_scores <- data.frame(ME = tmp_me, MAE = tmp_mae, RMSE = tmp_rmse,
