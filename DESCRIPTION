@@ -6,11 +6,16 @@ Author: Florian Detsch, Thomas Nauss
 Maintainer: Florian Detsch <florian.detsch@staff.uni-marburg.de>
 Description: More about what it does (maybe more than one line)
 Depends:
-    MODIS,
+    raster,
     methods
 Imports:
     gimms,
+    lattice, 
+    latticeExtra,
+    MODIS,
     parallel,
+    plotrix,
+    remote,
     Rsenal
 License: GPL (>= 3) | file LICENSE
 LazyData: TRUE
