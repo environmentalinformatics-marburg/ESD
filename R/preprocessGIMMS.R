@@ -7,6 +7,8 @@
 #' composites (\code{\link{monthlyComposite}}), and subsequent application of
 #' the Whittaker smoother (\code{\link{whittaker.raster}}).
 #'
+#' @param x \code{character}. Vector of local filepaths created e.g. from
+#' \code{\link{downloadGimms}}. See also \code{\link{rasterizeGimms}}.
 #' @param dsn \code{character}, defaults to current working directory. Target
 #' folder for file download passed to \code{\link{downloadGimms}}.
 #' @param ext \code{Extent}, or any object from which an \code{Extent} can be
@@ -53,24 +55,25 @@
 #'
 #' @export preprocessGIMMS
 #' @name preprocessGIMMS
-preprocessGIMMS <- function(dsn = getwd(),
-                              ext = NULL,
-                              keep = NULL,
-                              # fun = max,
-                              lambda = 5000,
-                              cores = 1L,
-                              outDirPath = getwd(),
-                              ...) {
+preprocessGIMMS <- function(x,
+                            dsn = getwd(),
+                            ext = NULL,
+                            keep = NULL,
+                            # fun = max,
+                            lambda = 5000,
+                            cores = 1L,
+                            outDirPath = getwd(),
+                            ...) {
 
   ## rasterize and apply quality control
-  rst <- gimms::rasterizeGimms(fls, ext, keep = keep, cores = cores)
+  rst <- gimms::rasterizeGimms(x, ext, keep = keep, cores = cores)
 
   # ## create monthly composites
-  # mvc <- gimms::monthlyComposite(rst, indices = gimms::monthlyIndices(fls),
+  # mvc <- gimms::monthlyComposite(rst, indices = gimms::monthlyIndices(x),
   #                                fun = fun, cores = cores, na.rm = TRUE)
 
   ## apply whittaker smoother
-  dts <- gimms::monthlyIndices(fls, timestamp = TRUE)
+  dts <- gimms::monthlyIndices(x, timestamp = TRUE)
   # dts <- seq(dts[1], dts[length(dts)], "month")
   nfo <- MODIS::orgTime(dts)
 

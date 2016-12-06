@@ -2,22 +2,26 @@
 % Please edit documentation in R/evaluate.R
 \name{evaluate}
 \alias{evaluate}
-\title{Visualize EOT Validation Results}
+\title{Evaluate EOT-Based NDVI Resampling}
 \usage{
-evaluate(pred, resp, by = 24L, times = 10L, size = 5L, ...)
+evaluate(pred, resp, by = 24L, times = 10L, size = 5L, cores = 1L, ...)
 }
 \arguments{
-\item{pred}{\code{Raster*} object. Predictor data for EOT analysis.}
+\item{pred}{\code{Raster*} object used as predictor during EOT analysis.}
 
-\item{resp}{\code{Raster*} object. Response data for EOT analysis.}
+\item{resp}{\code{Raster*} object used as response during EOT analysis.}
 
 \item{by}{\code{integer}. Increment of the sequence passed to
-\code{\link{seq}}.}
+\code{\link{seq}}, defaults to \code{24L} for half-monthly input data.}
 
 \item{times}{\code{integer}. Determines the number of
-\code{\link{evaluateEOT}} runs.}
+\code{\link{evaluateCycle}} runs, from which average error and regression
+metrics are subsequently calculated.}
 
-\item{size}{\code{integer}. Sample size passed to \code{\link{sample}}.}
+\item{size}{\code{integer}. Sample size of the training dataset passed to
+\code{\link{sample}}, defaults to \code{5L} for five years of training.}
+
+\item{cores}{\code{integer}. Number of cores for parallel processing.}
 
 \item{...}{Additional arguments passed to \code{\link{write.csv}}.}
 }
@@ -25,8 +29,10 @@ evaluate(pred, resp, by = 24L, times = 10L, size = 5L, ...)
 A \code{data.frame}.
 }
 \description{
-Evaluate performance of EOT-based spatial resampling \emph{n} times and
-subsequently visualize derived error and regression metrics.
+Evaluate the performance of EOT-based spatial resampling of the NDVI on the
+basis of selected error and regression metrics. The evaluation procedure is
+carried out \emph{n} times, thus ensuring the deduction of more reliable
+results from repeated calls to \code{\link{evaluateCycle}}.
 }
 \author{
 Florian Detsch

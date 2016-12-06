@@ -6,7 +6,9 @@
 #' imagery.
 #'
 #' @param dsn \code{character}. Target folder for file output.
-# #' @param product \code{character}, see \code{\link{getProduct}}.
+#' @param product \code{character}, defaults to the Terra (\code{"MOD13Q1"}) and
+#' Aqua-MODIS (\code{"MYD13Q1"}) 250-m NDVI products. See also
+#' \code{\link{getProduct}}.
 #' @param ext \code{Extent}, or any object from which an \code{Extent} can be
 #' extracted, see \code{\link[raster]{crop}}.
 #' @param cores \code{integer}. Number of cores for parallel processing.

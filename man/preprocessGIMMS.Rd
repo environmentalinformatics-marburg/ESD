@@ -4,10 +4,13 @@
 \alias{preprocessGIMMS}
 \title{GIMMS NDVI3g.v1 Processing Chain}
 \usage{
-preprocessGIMMS(dsn = getwd(), ext = NULL, keep = NULL, lambda = 5000,
-  cores = 1L, outDirPath = getwd(), ...)
+preprocessGIMMS(x, dsn = getwd(), ext = NULL, keep = NULL,
+  lambda = 5000, cores = 1L, outDirPath = getwd(), ...)
 }
 \arguments{
+\item{x}{\code{character}. Vector of local filepaths created e.g. from
+\code{\link{downloadGimms}}. See also \code{\link{rasterizeGimms}}.}
+
 \item{dsn}{\code{character}, defaults to current working directory. Target
 folder for file download passed to \code{\link{downloadGimms}}.}
 

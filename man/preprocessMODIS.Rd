@@ -10,6 +10,10 @@ preprocessMODIS(dsn = getwd(), product = c("MOD13Q1", "MYD13Q1"),
 \arguments{
 \item{dsn}{\code{character}. Target folder for file output.}
 
+\item{product}{\code{character}, defaults to the Terra (\code{"MOD13Q1"}) and
+Aqua-MODIS (\code{"MYD13Q1"}) 250-m NDVI products. See also
+\code{\link{getProduct}}.}
+
 \item{ext}{\code{Extent}, or any object from which an \code{Extent} can be
 extracted, see \code{\link[raster]{crop}}.}
 

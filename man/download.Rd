@@ -2,7 +2,7 @@
 % Please edit documentation in R/download.R
 \name{download}
 \alias{download}
-\title{MODIS and GIMMS Download Chain}
+\title{Download of NDVI Products}
 \usage{
 download(type = c("MODIS", "GIMMS"), ...)
 }
@@ -11,17 +11,34 @@ download(type = c("MODIS", "GIMMS"), ...)
 (default) and "GIMMS".}
 
 \item{...}{Additional arguments passed to the underlying download functions
-for MODIS (\code{\link{runGdal}}; except for 'product' and 'collection', with
-the latter set to \code{"006"}) and GIMMS (\code{\link{downloadGimms}};
-except for 'version', which is set to \code{1L}) depending on 'type'.}
+for MODIS (\code{\link{runGdal}}; except for 'product', 'collection' (set to
+\code{"006"}), and 'SDSstring' (set to \code{"101000000011"})) and GIMMS
+(\code{\link{downloadGimms}}; except for 'version' (set to \code{1L}))
+depending on 'type'.}
 }
 \value{
 A \code{character} vector of local filenames.
 }
 \description{
 This is one of the core functions of the \strong{exploratories} package as it
-invokes the product download of MODIS or GIMMS in preparation for
+invokes the download of selected NDVI products in preparation for
 preprocessing and the application of the EOT algorithm.
+}
+\examples{
+\dontrun{
+## Reference extent (Schwaebische Alb)
+ext <- system.file("extdata/alb.rds", package = "exploratories")
+ext <- readRDS(ext)
+
+## MODIS download
+mds <- download(extent = ext, begin = "2012001", end = "2015365",
+                job = "MCD13Q1.006_alb")
+
+## GIMMS download
+gms <- download("GIMMS", x = as.Date("2012-01-01"), y = as.Date("2015-12-31"),
+                dsn = "NDVI3g.v1_alb")
+}
+
 }
 \author{
 Florian Detsch

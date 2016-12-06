@@ -1,16 +1,21 @@
-#' Visualize EOT Validation Results
+#' Evaluate EOT-Based NDVI Resampling
 #'
 #' @description
-#' Evaluate performance of EOT-based spatial resampling \emph{n} times and
-#' subsequently visualize derived error and regression metrics.
+#' Evaluate the performance of EOT-based spatial resampling of the NDVI on the
+#' basis of selected error and regression metrics. The evaluation procedure is
+#' carried out \emph{n} times, thus ensuring the deduction of more reliable
+#' results from repeated calls to \code{\link{evaluateCycle}}.
 #'
-#' @param pred \code{Raster*} object. Predictor data for EOT analysis.
-#' @param resp \code{Raster*} object. Response data for EOT analysis.
+#' @param pred \code{Raster*} object used as predictor during EOT analysis.
+#' @param resp \code{Raster*} object used as response during EOT analysis.
 #' @param by \code{integer}. Increment of the sequence passed to
-#' \code{\link{seq}}.
+#' \code{\link{seq}}, defaults to \code{24L} for half-monthly input data.
 #' @param times \code{integer}. Determines the number of
-#' \code{\link{evaluateEOT}} runs.
-#' @param size \code{integer}. Sample size passed to \code{\link{sample}}.
+#' \code{\link{evaluateCycle}} runs, from which average error and regression
+#' metrics are subsequently calculated.
+#' @param size \code{integer}. Sample size of the training dataset passed to
+#' \code{\link{sample}}, defaults to \code{5L} for five years of training.
+#' @param cores \code{integer}. Number of cores for parallel processing.
 #' @param ... Additional arguments passed to \code{\link{write.csv}}.
 #'
 #' @return
@@ -21,7 +26,8 @@
 #'
 #' @export evaluate
 #' @name evaluate
-evaluate <- function(pred, resp, by = 24L, times = 10L, size = 5L, ...) {
+evaluate <- function(pred, resp, by = 24L, times = 10L, size = 5L,
+                     cores = 1L, ...) {
 
   ## evaluate eot-based spatial resampling 'times' times
   lst_scores <- lapply(1:times, function(h) {
@@ -37,7 +43,7 @@ evaluate <- function(pred, resp, by = 24L, times = 10L, size = 5L, ...) {
       sort(sample(month_id, size))
     }))
 
-    exploratories::evaluateEOT(pred, resp, training = indices)
+    evaluateCycle(pred, resp, training = indices, cores = cores)
   })
 
   lst_spatial <- lapply(lst_scores, "[[", 1)
@@ -51,7 +57,7 @@ evaluate <- function(pred, resp, by = 24L, times = 10L, size = 5L, ...) {
   dat_spatial <- data.frame(ME = dat_spatial[1], ME.se, MAE = dat_spatial[2], MAE.se,
                             RMSE = dat_spatial[3], RMSE.se, Rsq = dat_spatial[5])
 
-  write.csv(dat_spatial, ...)
+  utils::write.csv(dat_spatial, ...)
 
   return(dat_spatial)
 }
