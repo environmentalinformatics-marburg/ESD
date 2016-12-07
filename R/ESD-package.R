@@ -1,12 +1,12 @@
-#' Vegetation Analysis in the Biodiversity Exploratories
+#' EOT-Based Spatial Downscaling
 #'
-#' We provide a set of functions to analyze long-term vegetation dynamics in the
-#' Biodiversity Exploratories.
+#' We provide a set of functions to spatially downscale arbitrary \code{Raster*}
+#' time series based on the empirical orthogonal teleconnections (EOT) method.
 #'
-#' @name exploratories-package
-#' @aliases exploratoriespackage
+#' @name ESD-package
+#' @aliases ESDpackage
 #' @docType package
-#' @title Vegetation Analysis in the Biodiversity Exploratories
+#' @title EOT-Based Spatial Downscaling
 #' @author Florian Detsch, Thomas Nauss
 #'
 #' @import gimms lattice latticeExtra methods MODIS parallel raster remote

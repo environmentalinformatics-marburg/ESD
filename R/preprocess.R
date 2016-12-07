@@ -1,9 +1,9 @@
 #' MODIS and GIMMS Preprocessing Chain
 #'
 #' @description
-#' This is one of the core functions of the \strong{exploratories} package as it
-#' invokes the preprocessing chains of MODIS or GIMMS in preparation for the
-#' application of the EOT algorithm.
+#' This is one of the core functions of the \strong{ESD} package as it invokes
+#' the preprocessing chains of MODIS or GIMMS in preparation for the application
+#' of the EOT algorithm.
 #'
 #' @param type \code{character}. Currently available options are "MODIS"
 #' (default) and "GIMMS".
