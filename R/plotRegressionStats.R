@@ -1,4 +1,5 @@
-plotRegressionStats <- function(reg_stats, rng = NULL, left = TRUE,
+plotRegressionStats <- function(reg_stats, rng = NULL,
+                                xlim_rsq = c(0.625, 1.05), left = TRUE,
                                 add = FALSE, ...) {
 
   ## stop if supplied prediction statistics are not named
@@ -20,7 +21,7 @@ plotRegressionStats <- function(reg_stats, rng = NULL, left = TRUE,
     lattice::trellis.par.set("clip", list(panel = "off", strip = "off"))
 
     if (lattice::panel.number() == 1) {
-      lattice::panel.axis("top", at = seq(.7, 1, .1), outside = FALSE,
+      lattice::panel.axis("top", at = seq(.6, 1, .1), outside = FALSE,
                           labels = TRUE, half = FALSE, text.cex = .7,
                           tck = .5)
       lattice::panel.axis(side = "left", at = 1, outside = TRUE, tck = .5,
@@ -63,7 +64,7 @@ plotRegressionStats <- function(reg_stats, rng = NULL, left = TRUE,
 
   rsq_plt <- lattice::dotplot(nms ~ Rsq, data = df_rsq, pch = ifelse(add, 21, 16),
                      xlab = "", ylab = "", col.line = c("grey70", "transparent"),
-                     col = "grey20", xlim = c(0.625, 1.05),
+                     col = "grey20", xlim = xlim_rsq,
                      scales = list(draw = FALSE),
                      cex = 1, as.table = TRUE,
                      par.settings = list(
