@@ -4,15 +4,11 @@
 \alias{preprocessGIMMS}
 \title{GIMMS NDVI3g.v1 Processing Chain}
 \usage{
-preprocessGIMMS(x, dsn = getwd(), ext = NULL, keep = NULL,
-  lambda = 5000, cores = 1L, outDirPath = getwd(), ...)
+preprocessGIMMS(x, ext = NULL, keep = NULL, cores = 1L, ...)
 }
 \arguments{
 \item{x}{\code{character}. Vector of local filepaths created e.g. from
 \code{\link{downloadGimms}}. See also \code{\link{rasterizeGimms}}.}
-
-\item{dsn}{\code{character}, defaults to current working directory. Target
-folder for file download passed to \code{\link{downloadGimms}}.}
 
 \item{ext}{\code{Extent}, or any object from which an \code{Extent} can be
 extracted, see \code{\link[raster]{crop}}.}
@@ -20,17 +16,10 @@ extracted, see \code{\link[raster]{crop}}.}
 \item{keep}{\code{integer}. Flag values of NDVI3g.v1 pixels to spare during
 quality control, see \code{\link{rasterizeGimms}}.}
 
-\item{lambda}{\code{character} or \code{integer}. Yearly lambda value passed
-to \code{\link{whittaker.raster}}.}
-
 \item{cores}{\code{integer}. Number of cores for parallel computing.}
 
-\item{outDirPath}{\code{character}, defaults to current working directory.
-Target folder for Whittaker-smoothed files passed to
-\code{\link{whittaker.raster}}.}
-
-\item{...}{Further arguments passed to \code{\link{downloadGimms}} except for
-'version' (is set to \code{1L}) and 'dsn' (see above).}
+\item{...}{Additional arguments passed to \code{\link{whittaker.raster}}
+(except for 'vi' and 'timeInfo').}
 }
 \value{
 A \code{RasterStack} of Whittaker-smoothed GIMMS NDVI3g.v1 monthly value

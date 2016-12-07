@@ -5,7 +5,7 @@
 \title{MODIS Preprocessing Chain}
 \usage{
 preprocessMODIS(dsn = getwd(), product = c("MOD13Q1", "MYD13Q1"),
-  ext = NULL, cores = parallel::detectCores() - 1, ...)
+  ext = NULL, cores = 1L, ...)
 }
 \arguments{
 \item{dsn}{\code{character}. Target folder for file output.}
@@ -19,7 +19,8 @@ extracted, see \code{\link[raster]{crop}}.}
 
 \item{cores}{\code{integer}. Number of cores for parallel processing.}
 
-\item{...}{Additional arguments passed to \code{\link{runGdal}}.}
+\item{...}{Additional arguments passed to \code{\link{whittaker.raster}}
+(except for 'vi' and 'outDirPath').}
 }
 \value{
 A preprocessed \code{Raster*} object.
@@ -33,6 +34,6 @@ imagery.
 Florian Detsch
 }
 \seealso{
-\code{\link{runGdal}}, \code{\link[raster]{crop}}.
+\code{\link[raster]{crop}}, \code{\link{whittaker.raster}}.
 }
 

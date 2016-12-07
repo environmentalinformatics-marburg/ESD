@@ -12,7 +12,8 @@
 #' @param ext \code{Extent}, or any object from which an \code{Extent} can be
 #' extracted, see \code{\link[raster]{crop}}.
 #' @param cores \code{integer}. Number of cores for parallel processing.
-#' @param ... Additional arguments passed to \code{\link{runGdal}}.
+#' @param ... Additional arguments passed to \code{\link{whittaker.raster}}
+#' (except for 'vi' and 'outDirPath').
 #'
 #' @return
 #' A preprocessed \code{Raster*} object.
@@ -21,15 +22,15 @@
 #' Florian Detsch
 #'
 #' @seealso
-#' \code{\link{runGdal}}, \code{\link[raster]{crop}}.
+#' \code{\link[raster]{crop}}, \code{\link{whittaker.raster}}.
 #'
 #' @export preprocessMODIS
 #' @name preprocessMODIS
 preprocessMODIS <- function(dsn = getwd(),
-                              product = c("MOD13Q1", "MYD13Q1"),
-                              ext = NULL,
-                              cores = parallel::detectCores() - 1,
-                              ...) {
+                            product = c("MOD13Q1", "MYD13Q1"),
+                            ext = NULL,
+                            cores = 1L,
+                            ...) {
 
   ### environmental stuff -----
 
@@ -230,7 +231,7 @@ preprocessMODIS <- function(dsn = getwd(),
   dir_wht <- paste0(dir_mcd, "/whittaker")
   if (!dir.exists(dir_wht)) dir.create(dir_wht)
 
-  lst_wht <- MODIS::whittaker.raster(rst_mcd, outDirPath = dir_wht)
+  lst_wht <- MODIS::whittaker.raster(rst_mcd, outDirPath = dir_wht, ...)
   rst_wht <- raster::stack(lst_wht)
 
   ## deregister parallel backend and return results
