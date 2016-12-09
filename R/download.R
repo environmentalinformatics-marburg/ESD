@@ -1,40 +1,61 @@
 #' Download of NDVI Products
 #'
 #' @description
-#' This is one of the core functions of the \strong{ESD} package as it invokes
-#' the download of selected NDVI products in preparation for preprocessing and
-#' the application of the EOT algorithm.
+#' This function serves as a wrapper around the underlying product-related 
+#' download functions. Currently supported datasets originate from the Moderate 
+#' Resolution Imaging Spectroradiometer (MODIS) aboard the Terra and Aqua 
+#' satellite platforms and the Advanced Very High Resolution Radiometer (AVHRR) 
+#' Global Inventory Modeling and Mapping studies (GIMMS).
 #'
-#' @param type \code{character}. Currently available options are "MODIS"
-#' (default) and "GIMMS".
+#' @param type \code{character}. Currently available options are \code{"MODIS"}
+#' (default) and \code{"GIMMS"}.
 #' @param ... Additional arguments passed to the underlying download functions
-#' for MODIS (\code{\link{runGdal}}; except for 'product', 'collection' (set to
-#' \code{"006"}), and 'SDSstring' (set to \code{"101000000011"})) and GIMMS
-#' (\code{\link{downloadGimms}}; except for 'version' (set to \code{1L}))
-#' depending on 'type'.
+#' for MODIS (\code{\link{runGdal}}; see 'Details') and GIMMS data 
+#' (\code{\link{downloadGimms}}).
 #'
 #' @return
-#' A \code{character} vector of local filenames.
+#' If \code{type = "GIMMS"}, a \code{character} vector of local filenames. Else 
+#' if \code{type = "MODIS"}, a \code{list} of product and date-specific 
+#' output files in \code{character} format, see \code{\link{runGdal}}.
 #'
+#' @details 
+#' Note that when working with the MODIS M*D13 product series, the optional 
+#' 'SDSstring' argument passed to \code{\link{runGdal}} must at least include 
+#' the following four SDS:
+#' \itemize{
+#' \item{'NDVI' (or 'EVI'), #1 (or #2)}
+#' \item{'VI_Quality', #3}
+#' \item{'pixel_reliability', #12}
+#' \item{'composite_day_of_the_year', #11}
+#' }
+#' Accordingly, the minimum requirement for 'SDSstring' is \code{"101000000011"} 
+#' (\code{"011000000011"}) for the NDVI (EVI).
+#' 
 #' @author
 #' Florian Detsch
 #'
 #' @seealso
 #' \code{\link{runGdal}}, \code{\link{downloadGimms}}.
 #'
+#' @references 
+#' LP DAAC (2016) MOD13Q1: MODIS/Terra Vegetation Indices 16-Day L3 Global 250m 
+#' Grid SIN V006. Available online:
+#' \url{https://lpdaac.usgs.gov/dataset_discovery/modis/modis_products_table/mod13q1_v006}.
+#' 
 #' @examples
 #' \dontrun{
 #' ## Reference extent (Schwaebische Alb)
-#' ext <- system.file("extdata/alb.rds", package = "ESD")
-#' ext <- readRDS(ext)
+#' ext <- readRDS(system.file("extdata/alb.rds", package = "ESD"))
 #'
 #' ## MODIS download
-#' mds <- download(extent = ext, begin = "2012001", end = "2015365",
-#'                 job = "MCD13Q1.006_alb")
+#' mds <- download("MODIS", product = "M*D13A1", collection = "006", 
+#'                 extent = ext, begin = "2015001", end = "2015031")
+#' mds                 
 #'
 #' ## GIMMS download
-#' gms <- download("GIMMS", x = as.Date("2012-01-01"), y = as.Date("2015-12-31"),
-#'                 dsn = "NDVI3g.v1_alb")
+#' gms <- download("GIMMS", x = as.Date("2015-01-01"), y = as.Date("2015-01-31"),
+#'                 dsn = paste0(getOption("MODIS_outDirPath"), "NDVI3g.v1_alb"))
+#' gms                 
 #' }
 #'
 #' @export download
@@ -43,10 +64,9 @@ download <- function(type = c("MODIS", "GIMMS"),
                      ...) {
 
   if (type[1] == "MODIS") {
-    MODIS::runGdal(product = c("MOD13Q1", "MYD13Q1"), collection = "006",
-                   SDSstring = "101000000011", ...)
+    MODIS::runGdal(...)
   } else if (type[1] == "GIMMS") {
-    gimms::downloadGimms(version = 1L, ...)
+    gimms::downloadGimms(...)
   } else {
     stop("Specified product not supported.\n")
   }

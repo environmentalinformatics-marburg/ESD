@@ -6,13 +6,13 @@ Author: Florian Detsch, Thomas Nauss
 Maintainer: Florian Detsch <florian.detsch@staff.uni-marburg.de>
 Description: More about what it does (maybe more than one line)
 Depends:
-    raster,
-    methods
+    methods, 
+    MODIS,
+    raster
 Imports:
     gimms,
     lattice, 
     latticeExtra,
-    MODIS,
     parallel,
     plotrix,
     remote,

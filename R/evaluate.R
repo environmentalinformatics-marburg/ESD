@@ -1,13 +1,14 @@
 #' Evaluate EOT-Based NDVI Resampling
 #'
 #' @description
-#' Evaluate the performance of EOT-based spatial resampling of the NDVI on the
+#' Evaluate the performance of EOT-based spatial resampling (of the NDVI) on the
 #' basis of selected error and regression metrics. The evaluation procedure is
 #' carried out \emph{n} times, thus ensuring the deduction of more reliable
 #' results from repeated calls to \code{\link{evaluateCycle}}.
 #'
-#' @param pred \code{Raster*} object used as predictor during EOT analysis.
-#' @param resp \code{Raster*} object used as response during EOT analysis.
+#' @param pred,resp \code{Raster*} objects used as predictor and response 
+#' domains during EOT analysis.
+#' @param n \code{integer}. Number of EOT modes to calculate.
 #' @param by \code{integer}. Increment of the sequence passed to
 #' \code{\link{seq}}, defaults to \code{24L} for half-monthly input data.
 #' @param times \code{integer}. Determines the number of
@@ -26,7 +27,7 @@
 #'
 #' @export evaluate
 #' @name evaluate
-evaluate <- function(pred, resp, by = 24L, times = 10L, size = 5L,
+evaluate <- function(pred, resp, n = 10L, by = 24L, times = 10L, size = 5L,
                      cores = 1L, ...) {
 
   ## evaluate eot-based spatial resampling 'times' times
@@ -43,7 +44,7 @@ evaluate <- function(pred, resp, by = 24L, times = 10L, size = 5L,
       sort(sample(month_id, size))
     }))
 
-    evaluateCycle(pred, resp, training = indices, cores = cores)
+    evaluateCycle(pred, resp, training = indices, n, cores = cores)
   })
 
   lst_spatial <- lapply(lst_scores, "[[", 1)
@@ -57,7 +58,12 @@ evaluate <- function(pred, resp, by = 24L, times = 10L, size = 5L,
   dat_spatial <- data.frame(ME = dat_spatial[1], ME.se, MAE = dat_spatial[2], MAE.se,
                             RMSE = dat_spatial[3], RMSE.se, Rsq = dat_spatial[5])
 
-  utils::write.csv(dat_spatial, ...)
+  ## if output 'file' is specified, call write.csv()
+  dots <- list(...)
+  if ("file" %in% names(dots)) {
+    dots <- append(list(x = dat_spatial), dots)
+    do.call(utils::write.csv, dots)
+  }
 
   return(dat_spatial)
 }

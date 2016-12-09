@@ -1,27 +1,63 @@
-plotRegressionStats <- function(reg_stats, rng = NULL,
-                                xlim_rsq = c(0.625, 1.05), left = TRUE,
-                                add = FALSE, ...) {
+#' Visualize Error and Regression Metrics 
+#' 
+#' @description 
+#' \strong{ESD} standard method for visualizing calculated error and regression 
+#' metrics.
+#' 
+#' @param metrics \code{data.frame}. Error and regression metrics as returned by 
+#' \code{\link{evaluate}}.
+#' @param xlim_err,xlim_rsq \code{numeric}. x-axis range for the lower (errors; 
+#' see '...') and upper (\eqn{R^2}) panel.
+#' @param left \code{logical}, defaults to \code{TRUE}. Determines position of 
+#' the created plot in a multi-panel figure (i.e., if \code{FALSE}, the left 
+#' y-axis is removed).
+#' @param add \code{logical}, defaults to \code{FALSE}. Determines whether the 
+#' created plot is added to an already existing multi-panel figure.
+#' @param ... Additional argument passed to \code{\link{round}}. If 'xlim_err' 
+#' is missing, the lower axis range is calculated automatically. 
+#' 
+#' @return 
+#' A \code{trellis} object.
+#' 
+#' @author 
+#' Florian Detsch
+#' 
+#' @examples 
+#' \dontrun{
+#' ## evaluate performance of EOT-based spatial downscaling
+#' metrics <- evaluate(albGIMMS, albMODIS, size = 2)
+#' 
+#' ## visualize results
+#' p <- plotRegressionStats(metrics, xlim_err = c(-.012, 0.052), xlim_rsq = c(0.75, 1.05))
+#' p
+#' }
+#' 
+#' @export plotRegressionStats
+#' @name plotRegressionStats
+plotRegressionStats <- function(metrics, 
+                                xlim_err = NULL, xlim_rsq = c(0, 1.05), 
+                                left = TRUE, add = FALSE, ...) {
 
   ## stop if supplied prediction statistics are not named
-  nms <- names(reg_stats)
+  nms <- names(metrics)
   if (is.null(nms))
     stop("Please supply named prediction performance statistics as returned by
          Rsenal::regressionStats().")
 
   # numeric vector to data.frame
-  if (is.numeric(reg_stats)) {
-    mat_reg_stats <- matrix(reg_stats, 1, byrow = TRUE)
-    df_reg_stats <- data.frame(mat_reg_stats)
-    names(df_reg_stats) <- names(reg_stats)
+  if (is.numeric(metrics)) {
+    mat_metrics <- matrix(metrics, 1, byrow = TRUE)
+    df_metrics <- data.frame(mat_metrics)
+    names(df_metrics) <- names(metrics)
   } else {
-    df_reg_stats <- reg_stats
+    df_metrics <- metrics
   }
 
   panel.fun <- function(...) {
     lattice::trellis.par.set("clip", list(panel = "off", strip = "off"))
-
     if (lattice::panel.number() == 1) {
-      lattice::panel.axis("top", at = seq(.6, 1, .1), outside = FALSE,
+      lmt <- c(floor(xlim_rsq * 10)[1], ceiling(xlim_rsq * 10)[2]) / 10
+      lattice::panel.axis("top", at = seq(lmt[1], lmt[2], .1), outside = FALSE,
                           labels = TRUE, half = FALSE, text.cex = .7,
                           tck = .5)
       lattice::panel.axis(side = "left", at = 1, outside = TRUE, tck = .5,
@@ -30,8 +66,9 @@ plotRegressionStats <- function(reg_stats, rng = NULL,
       lattice::panel.abline(v = 1, lty = 3, lwd = 1, col = "red")
     }
 
+    lattice::trellis.par.set("clip", list(panel = "off", strip = "off"))
     if (lattice::panel.number() == 2) {
-      at <- pretty(rng)
+      at <- pretty(xlim_err)
       lattice::panel.axis("bottom", at = at, outside = FALSE, tck = .5,
                           labels = TRUE, half = FALSE, text.cex = .7)
       lattice::panel.axis("left", at = 2:4, outside = TRUE, text.cex = .7, tck = .5,
@@ -56,10 +93,10 @@ plotRegressionStats <- function(reg_stats, rng = NULL,
     }
   }
 
-  nms <- names(df_reg_stats)[c(1, 3, 5)]
+  nms <- names(df_metrics)[c(1, 3, 5)]
   nms <- c(nms, "")
 
-  df_rsq <- data.frame(nms = c("Rsq", "", ""), Rsq = c(df_reg_stats$Rsq, NA, NA))
+  df_rsq <- data.frame(nms = c("Rsq", "", ""), Rsq = c(df_metrics$Rsq, NA, NA))
   df_rsq$nms <- factor(df_rsq$nms, levels = c("Rsq", "", "NULL"))
 
   rsq_plt <- lattice::dotplot(nms ~ Rsq, data = df_rsq, pch = ifelse(add, 21, 16),
@@ -72,14 +109,14 @@ plotRegressionStats <- function(reg_stats, rng = NULL,
                        layout.heights = list(top.padding = 0, bottom.padding = 0)
                      ))
 
-  fit <- c(df_reg_stats$ME,
-           df_reg_stats$MAE,
-           df_reg_stats$RMSE,
+  fit <- c(df_metrics$ME,
+           df_metrics$MAE,
+           df_metrics$RMSE,
            NA)
 
-  fit_se <- c(df_reg_stats$ME.se,
-              df_reg_stats$MAE.se,
-              df_reg_stats$RMSE.se,
+  fit_se <- c(df_metrics$ME.se,
+              df_metrics$MAE.se,
+              df_metrics$RMSE.se,
               NA)
 
   df_plt <- data.frame(nms = nms,
@@ -91,10 +128,10 @@ plotRegressionStats <- function(reg_stats, rng = NULL,
   x_se <- c(df_plt$lwr, df_plt$upr)
   y_se <- rep(c(2, 1, 3, NA) + 1, 2)
 
-  if (is.null(rng)) {
-    rng <- range(x_se, na.rm = TRUE)
-    rng <- round(c(rng[1] - 0.2 * rng[1],
-                   rng[2] + 0.2 * rng[2]), ...)
+  if (is.null(xlim_err)) {
+    xlim_err <- range(x_se, na.rm = TRUE)
+    xlim_err <- round(c(xlim_err[1] - 0.2 * xlim_err[1],
+                   xlim_err[2] + 0.2 * xlim_err[2]), ...)
   }
 
   err_lbl <- c("", expression("MAE"["T"]),
@@ -105,7 +142,7 @@ plotRegressionStats <- function(reg_stats, rng = NULL,
                      xlab = "", ylab = "",
                      # ylim = c(-1, 4),
                      col = "grey20", col.line = c(rep("grey70", 3), "transparent"),
-                     pch = "|", xlim = rng,
+                     pch = "|", xlim = xlim_err,
                      cex = 1, as.table = TRUE,
                      scales = list(y = list(labels = err_lbl)),
                      par.settings = list(

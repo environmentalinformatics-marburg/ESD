@@ -18,9 +18,9 @@ functions for MODIS (\code{\link{preprocessMODIS}}) and GIMMS
 A preprocessed \code{Raster*} object.
 }
 \description{
-This is one of the core functions of the \strong{exploratories} package as it
-invokes the preprocessing chains of MODIS or GIMMS in preparation for the
-application of the EOT algorithm.
+This is one of the core functions of the \strong{ESD} package as it invokes
+the preprocessing chains of MODIS or GIMMS in preparation for the application
+of the EOT algorithm.
 }
 \author{
 Florian Detsch

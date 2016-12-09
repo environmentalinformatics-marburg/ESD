@@ -4,12 +4,14 @@
 \alias{evaluate}
 \title{Evaluate EOT-Based NDVI Resampling}
 \usage{
-evaluate(pred, resp, by = 24L, times = 10L, size = 5L, cores = 1L, ...)
+evaluate(pred, resp, n = 10L, by = 24L, times = 10L, size = 5L,
+  cores = 1L, ...)
 }
 \arguments{
-\item{pred}{\code{Raster*} object used as predictor during EOT analysis.}
+\item{pred, resp}{\code{Raster*} objects used as predictor and response 
+domains during EOT analysis.}
 
-\item{resp}{\code{Raster*} object used as response during EOT analysis.}
+\item{n}{\code{integer}. Number of EOT modes to calculate.}
 
 \item{by}{\code{integer}. Increment of the sequence passed to
 \code{\link{seq}}, defaults to \code{24L} for half-monthly input data.}
@@ -29,7 +31,7 @@ metrics are subsequently calculated.}
 A \code{data.frame}.
 }
 \description{
-Evaluate the performance of EOT-based spatial resampling of the NDVI on the
+Evaluate the performance of EOT-based spatial resampling (of the NDVI) on the
 basis of selected error and regression metrics. The evaluation procedure is
 carried out \emph{n} times, thus ensuring the deduction of more reliable
 results from repeated calls to \code{\link{evaluateCycle}}.
