@@ -147,7 +147,7 @@ plotRegressionStats(mtr,
 ```
 
 <center>
-  <img src="http://i.imgur.com/68X7Gle.png" alt="Error and Regression Metrics" style="width: 550px;"/>
+  <img src="http://i.imgur.com/68X7Gle.png" alt="Error and Regression Metrics" style="width: 400px;"/>
   <br><br><b>Figure 1.</b> Error and regression metrics of EOT-based spatial downscaling of 8-km GIMMS NDVI (NDVI3g.v1) using 1-km MODIS NDVI (MOD/MYD13A1.006) from a 2-year training period.
 </center>
 
@@ -156,14 +156,24 @@ plotRegressionStats(mtr,
 #### Actual EOT-Based Spatial Downscaling
 Now that we know the method performs reasonably well, it is time to actually deduce EOT-based predictions from the coarse-resolution input data using `downscale`. As a short reminder, this is how the 1/12-degree GIMMS input data looks like: 
 
-```{r display_gimms}
+```{r display_gimms, eval = FALSE}
 plot(albGIMMS[[49:52]], zlim = c(0.59, 0.71))
 ```
 
+<center>
+  <img src="http://i.imgur.com/XLZVjAT.png" alt="1/12-degree GIMMS NDVI3g.v1" style="width: 550px;"/>
+  <br><br><b>Figure 2.</b> 1/12-degree GIMMS NDVI3g.v1 during the first four half-monthly time steps in 2014.
+</center>
+
 And here is the downscaled data resulting from EOT analysis:
 
-```{r downscale}
+```{r downscale, eval = FALSE}
 prd <- downscale(pred = albGIMMS[[1:48]], resp = albMODIS[[1:48]], neot = 10L, 
                  newdata = albGIMMS[[49:96]], var = 0.85)
 plot(prd[[1:4]], zlim = c(0.31, 0.81))
 ```
+
+<center>
+  <img src="http://i.imgur.com/IGSO9Ad.png" alt="1-km EOT-based NDVI" style="width: 550px;"/>
+  <br><br><b>Figure 3.</b> Resulting 1-km EOT-based NDVI during the first four half-monthly time steps in 2014.
+</center>

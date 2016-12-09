@@ -172,7 +172,7 @@ plotRegressionStats(mtr,
 ```
 
 <center>
-  <img src="http://i.imgur.com/68X7Gle.png" alt="Error and Regression Metrics" style="width: 550px;"/>
+  <img src="http://i.imgur.com/68X7Gle.png" alt="Error and Regression Metrics" style="width: 400px;"/>
   <br><br><b>Figure 1.</b> Error and regression metrics of EOT-based spatial downscaling of 8-km GIMMS NDVI (NDVI3g.v1) using 1-km MODIS NDVI (MOD/MYD13A1.006) from a 2-year training period.
 </center>
 
@@ -186,7 +186,10 @@ Now that we know the method performs reasonably well, it is time to actually ded
 plot(albGIMMS[[49:52]], zlim = c(0.59, 0.71))
 ```
 
-![plot of chunk display_gimms](figure/display_gimms-1.png)
+<center>
+  <img src="http://i.imgur.com/XLZVjAT.png" alt="1/12-degree GIMMS NDVI3g.v1" style="width: 550px;"/>
+  <br><br><b>Figure 2.</b> 1/12-degree GIMMS NDVI3g.v1 during the first four half-monthly time steps in 2014.
+</center>
 
 And here is the downscaled data resulting from EOT analysis:
 
@@ -194,63 +197,10 @@ And here is the downscaled data resulting from EOT analysis:
 ```r
 prd <- downscale(pred = albGIMMS[[1:48]], resp = albMODIS[[1:48]], neot = 10L, 
                  newdata = albGIMMS[[49:96]], var = 0.85)
-```
-
-```
-## 
-## Calculating linear model ... 
-## Locating 1. EOT ...
-## Location: 9.458333 48.375 
-## Cum. expl. variance (%): 83.54612 
-## 
-## Calculating linear model ... 
-## Locating 2. EOT ...
-## Location: 9.208333 48.375 
-## Cum. expl. variance (%): 84.03009 
-## 
-## Calculating linear model ... 
-## Locating 3. EOT ...
-## Location: 9.458333 48.375 
-## Cum. expl. variance (%): 84.48766 
-## 
-## Calculating linear model ... 
-## Locating 4. EOT ...
-## Location: 9.208333 48.375 
-## Cum. expl. variance (%): 84.92027 
-## 
-## Calculating linear model ... 
-## Locating 5. EOT ...
-## Location: 9.458333 48.375 
-## Cum. expl. variance (%): 85.32929 
-## 
-## Calculating linear model ... 
-## Locating 6. EOT ...
-## Location: 9.208333 48.375 
-## Cum. expl. variance (%): 85.71599 
-## 
-## Calculating linear model ... 
-## Locating 7. EOT ...
-## Location: 9.458333 48.375 
-## Cum. expl. variance (%): 86.0816 
-## 
-## Calculating linear model ... 
-## Locating 8. EOT ...
-## Location: 9.208333 48.375 
-## Cum. expl. variance (%): 86.42726 
-## 
-## Calculating linear model ... 
-## Locating 9. EOT ...
-## Location: 9.458333 48.375 
-## Cum. expl. variance (%): 86.75407 
-## 
-## Calculating linear model ... 
-## Locating 10. EOT ...
-## Location: 9.208333 48.375 
-## Cum. expl. variance (%): 87.06305
-```
-
-```r
 plot(prd[[1:4]], zlim = c(0.31, 0.81))
 ```
 
-![plot of chunk downscale](figure/downscale-1.png)
+<center>
+  <img src="http://i.imgur.com/IGSO9Ad.png" alt="1-km EOT-based NDVI" style="width: 550px;"/>
+  <br><br><b>Figure 3.</b> Resulting 1-km EOT-based NDVI during the first four half-monthly time steps in 2014.
+</center>
