@@ -21,12 +21,13 @@ NULL
 #'
 #' @docType data
 #' @name albMODIS
-#' @title Schwaebische Alb MODIS NDVI V006
-#' @description Schwaebische Alb half-monthly MODIS NDVI (V006; 2012 to 2015).
-#' @details This dataset contains half-monthly MODIS NDVI observations for parts
-#' of the Schwaebische Alb, south-western Germany (Jan 2012 to Dec 2015). For
-#' both the 16-day Terra (MOD13Q1.006) and Aqua-MODIS composite layers
-#' (MYD13Q1.006), preprocessing included
+#' @title Schwaebische Alb MODIS NDVI
+#' @description Schwaebische Alb half-monthly 1-km MODIS NDVI (V006; 2012 to 
+#' 2015).
+#' @details This dataset contains half-monthly 1-km MODIS NDVI observations for 
+#' parts of the Schwaebische Alb, south-western Germany (Jan 2012 to Dec 2015). 
+#' For both the 16-day Terra (MOD13A1.006) and Aqua-MODIS composite layers
+#' (MYD13A1.006), preprocessing included
 #'
 #' \itemize{
 #' \item{the conduction of a comprehensive quality control based on the
@@ -34,13 +35,13 @@ NULL
 #' \item{the subsequent creation of half-monthly composites based on the
 #' 'composite_day_of_the_year' SDS that line up exactly with the release
 #' interval of GIMMS NDVI3g.}
+#' }
 #'
 #' This was followed by the combination of the sensor-specific layers into
 #' half-monthly maximum value composites and, finally, the application of a
 #' modified Whittaker smoother to account for non-captured clouds and fill newly
 #' introduced data gaps.
 #'
-#' }
 #' @format \code{raster::RasterBrick}
 #' @references
 #' Didan K, Barreto Munoz A, Solano R, Huete A (2015) MODIS Vegetation Index
