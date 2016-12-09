@@ -1,0 +1,130 @@
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### A "Quick-and-Dirty" Introduction
+
+##### How to Install
+The development version of the package is currently available from [GitHub](https://github.com/environmentalinformatics-marburg/ESD) only. It can be installed via 
+
+```{r install, eval = FALSE}
+devtools::install_github("environmentalinformatics-marburg/ESD")
+```
+
+##### Data Download
+Data sets currently available for download originate from either the Moderate Resolution Imaging Spectroradiometer (MODIS) aboard the Terra and Aqua satellite platforms, or the Advanced Very High Resolution Radiometer (AVHRR) Global Inventory Modeling and Mapping Studies (GIMMS) archive. Depending on the 'type' argument, the `download` function calls either `runGdal` (from **MODIS**) or `downloadGimms` (from **gimms**) and hands over all additional arguments via '...'.
+
+```{r download_modis-echo, eval = FALSE}
+library(ESD)
+
+## MODIS download
+mds <- download("MODIS", product = "M*D13A1", collection = "006", 
+                begin = "2015001", end = "2015031", 
+                SDSstring = "101000000011", job = "MCD13A1.006_Alb", 
+                extent = readRDS(system.file("extdata/alb.rds", package = "ESD")))
+mds
+```
+
+```{r download_modis-eval, echo = FALSE, message = FALSE}
+library(ESD)
+
+## MODIS download
+jnk <- capture.output(
+  mds <- download("MODIS", product = "M*D13A1", SDSstring = "101000000011", 
+                  collection = "006", job = "MCD13A1.006_Alb", 
+                  begin = "2015001", end = "2015031",
+                  extent = readRDS(system.file("extdata/alb.rds", package = "ESD")))
+)
+mds
+```
+
+```{r download_gimms}
+## GIMMS download
+gms <- download("GIMMS", x = as.Date("2015-01-01"), y = as.Date("2015-01-31"),
+                dsn = paste0(getOption("MODIS_outDirPath"), "NDVI3g.v1_alb"))
+gms
+```
+
+##### Data Preprocessing
+Similar to `download`, data preprocessing via `preprocess` is currently available for MODIS (`preprocessMODIS`) and GIMMS (`preprocessGIMMS`) only and includes
+
+* optional layer clipping given that 'ext' is specified; 
+* comprehensive quality control;
+* in the case of MODIS, 
+  + creation of product-specific half-monthly composites similar to the release interval of GIMMS NDVI3g
+  + calculation of half-monthly maximum value composites from Terra and Aqua-MODIS imagery;
+* subsequent application of the modified Whittaker smoother. 
+
+Again, `download` serves merely as a wrapper around the underlying functions and, consequently, additional arguments can be specified via '...'.
+
+```{r preprocess_modis-echo, eval = FALSE}
+## Number of cores for parallel processing (use all but one)
+cores <- parallel::detectCores() - 1
+
+## MODIS preprocessing
+mds_ppc <- preprocess("MODIS", mds, cores = cores)
+mds_ppc
+```
+
+```{r preprocess_modis-eval, echo = FALSE}
+## Number of cores for parallel processing (use all but one)
+cores <- parallel::detectCores() - 1
+
+## MODIS preprocessing
+fls_ppc <- list.files("/media/fdetsch/Permanent/programming/r/MODIS/data/MCD13A1.006/whittaker/", 
+                      pattern = "yL5000.*.tif$", full.names = TRUE)
+fls_ppc <- fls_ppc[sapply(c("2015001", "2015015"), function(i) grep(i, fls_ppc))]
+mds_ppc <- raster::stack(fls_ppc)
+mds_ppc
+```
+
+```{r preprocess_gimms-echo, eval = FALSE}
+## GIMMS preprocessing
+gms_ppc <- preprocess("GIMMS", gms, cores = cores, keep = 0, # keep 'good' values only
+                      ext = readRDS(system.file("extdata/alb.rds", package = "ESD")))
+gms_ppc
+```
+
+```{r preprocess_gimms-eval, echo = FALSE}
+## GIMMS preprocessing
+fls_ppc <- list.files("/media/fdetsch/Permanent/programming/r/MODIS/data/NDVI3g.v1", 
+                      pattern = "yL5000.*.tif$", full.names = TRUE)
+fls_ppc <- fls_ppc[sapply(c("2015001", "2015015"), function(i) grep(i, fls_ppc))]
+gms_ppc <- raster::stack(fls_ppc)
+gms_ppc
+
+```
+
+##### Evaluation of EOT-Based Spatial Downscaling
+Of course, the creation of temporal composites -- and not to mention the application of the Whittaker smoother -- makes little sense when working with such a small number of layers. In the following, we will therefore utilize built-in NDVI datasets (2012--2015) originating from MODIS (MOD/MYD13A1.006) and GIMMS (NDVI3g.v1) to evaluate the performance of the EOT-based spatial downscaling procedure.
+
+Once the data is in, model evaluation is rather straightforward and can easily be carried out through `evaluate`. The function allows to dynamically specify the number of downscaling repetitions and size of the training dataset and, for each run, calculates selected error and regression metrics which are subsequently averaged.
+
+```{r evaluate-echo, eval = FALSE}
+mtr <- evaluate(pred = albGIMMS, resp = albMODIS, cores = cores, 
+                n = 10L,     # calculate 10 EOT modes
+                times = 10L, # repeat procedure 10 times
+                size = 2L)   # with 2 years of training data
+mtr
+
+## ...
+##
+## Calculating linear model ... 
+## Locating 10. EOT ...
+## Location: 9.375 48.54167 
+## Cum. expl. variance (%): 84.77944 
+```
+
+```{r evaluate-eval, echo = FALSE}
+mtr <- data.frame(ME = -0.006718157, ME.se = 0.001613909, 
+                  MAE = 0.03370197, MAE.se = 0.0009592951,
+                  RMSE = 0.04105545, RMSE.se = 0.001156508,
+                  Rsq = 0.8120697)
+mtr
+```
+
+```{r evaluate-plot}
+plotRegressionStats(mtr, 
+                    xlim_rsq = c(0.75, 1.05), 
+                    xlim_err = c(-0.012, 0.052))
+```
