@@ -9,6 +9,9 @@
 #' @param pred,resp \code{Raster*} objects used as predictor and response 
 #' domains during EOT analysis.
 #' @param n \code{integer}. Number of EOT modes to calculate.
+#' @param var \code{numeric}. Minimum amount of variance to be explained. If
+#' \code{NULL} (default), all calculated EOT modes are used for
+#' \code{\link[remote]{predict}}-ion.
 #' @param by \code{integer}. Increment of the sequence passed to
 #' \code{\link{seq}}, defaults to \code{24L} for half-monthly input data.
 #' @param times \code{integer}. Determines the number of
@@ -22,13 +25,16 @@
 #' @return
 #' A \code{data.frame}.
 #'
+#' @seealso 
+#' \code{\link{evaluateCycle}}, \code{\link{eot}}.
+#' 
 #' @author
 #' Florian Detsch
 #'
 #' @export evaluate
 #' @name evaluate
-evaluate <- function(pred, resp, n = 10L, by = 24L, times = 10L, size = 5L,
-                     cores = 1L, ...) {
+evaluate <- function(pred, resp, n = 10L, var = NULL, by = 24L, times = 10L, 
+                     size = 5L, cores = 1L, ...) {
 
   ## evaluate eot-based spatial resampling 'times' times
   lst_scores <- lapply(1:times, function(h) {
@@ -44,7 +50,7 @@ evaluate <- function(pred, resp, n = 10L, by = 24L, times = 10L, size = 5L,
       sort(sample(month_id, size))
     }))
 
-    evaluateCycle(pred, resp, training = indices, n, cores = cores)
+    evaluateCycle(pred, resp, training = indices, n, var, cores = cores)
   })
 
   lst_spatial <- lapply(lst_scores, "[[", 1)

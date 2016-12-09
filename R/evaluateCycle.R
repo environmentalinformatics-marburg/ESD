@@ -28,7 +28,8 @@
 #' Florian Detsch
 #'
 #' @seealso
-#' \code{\link{deseason}}, \code{\link{eot}}, \code{\link{nXplain}}
+#' \code{\link{evaluate}}, \code{\link{deseason}}, \code{\link{eot}}, 
+#' \code{\link{nXplain}}. 
 #'
 #' @references
 #' Detsch F, Otte I, Appelhans T, Hemp A, Nauss T (2016) Seasonal and long-term

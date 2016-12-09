@@ -4,14 +4,18 @@
 \alias{evaluate}
 \title{Evaluate EOT-Based NDVI Resampling}
 \usage{
-evaluate(pred, resp, n = 10L, by = 24L, times = 10L, size = 5L,
-  cores = 1L, ...)
+evaluate(pred, resp, n = 10L, var = NULL, by = 24L, times = 10L,
+  size = 5L, cores = 1L, ...)
 }
 \arguments{
 \item{pred, resp}{\code{Raster*} objects used as predictor and response 
 domains during EOT analysis.}
 
 \item{n}{\code{integer}. Number of EOT modes to calculate.}
+
+\item{var}{\code{numeric}. Minimum amount of variance to be explained. If
+\code{NULL} (default), all calculated EOT modes are used for
+\code{\link[remote]{predict}}-ion.}
 
 \item{by}{\code{integer}. Increment of the sequence passed to
 \code{\link{seq}}, defaults to \code{24L} for half-monthly input data.}
@@ -38,5 +42,8 @@ results from repeated calls to \code{\link{evaluateCycle}}.
 }
 \author{
 Florian Detsch
+}
+\seealso{
+\code{\link{evaluateCycle}}, \code{\link{eot}}.
 }
 

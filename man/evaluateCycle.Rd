@@ -49,6 +49,7 @@ Kilimanjaro, Tanzania. Remote Sensing of Environment 178, 70-83,
 doi:10.1016/j.rse.2016.03.007.
 }
 \seealso{
-\code{\link{deseason}}, \code{\link{eot}}, \code{\link{nXplain}}
+\code{\link{evaluate}}, \code{\link{deseason}}, \code{\link{eot}}, 
+\code{\link{nXplain}}.
 }
 
