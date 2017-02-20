@@ -16,10 +16,9 @@ library(devtools)
 install_github("environmentalinformatics-marburg/ESD")
 ```
 
-Additional dependencies which are not (yet) officially on CRAN include
+Additional dependencies which are not (yet) officially on CRAN currently include
 
-+ **Rsenal** (`install_github("environmentalinformatics-marburg/Rsenal")`) and 
-+ **MODIS** (`install_github("MatMatt/MODIS", ref = "release")`).
++ **Rsenal** (`install_github("environmentalinformatics-marburg/Rsenal")`).
 
 <hr>
 

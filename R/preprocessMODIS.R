@@ -9,8 +9,8 @@ if ( !isGeneric("preprocessMODIS") ) {
 #' quality-control, fortnightly composite creation, and subsequent combination 
 #' of Terra and Aqua imagery into half-monthly maximum value composites .
 #'
-#' @param x A named \code{list} of MODIS .hdf files per product as returned by 
-#' \code{\link{getHdf}}.
+#' @param x A named \code{list} of local MODIS SDS layers per product as 
+#' returned by \code{\link{getHdf}}.
 #' @param vi \code{character}. Vegetation index under consideration. Currently 
 #' available options are "NDVI" (default) and "EVI".
 #' @param dsn \code{character}. Target folder for file output.
