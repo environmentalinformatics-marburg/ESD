@@ -33,4 +33,3 @@ Didan K, Barreto Munoz A, Solano R, Huete A (2015) MODIS Vegetation Index
 User's Guide (MOD13 Series). Version 3.00, June 2015 (Collection 6).
 Available online: \url{https://lpdaac.usgs.gov/sites/default/files/public/product_documentation/mod13_user_guide.pdf}.
 }
-

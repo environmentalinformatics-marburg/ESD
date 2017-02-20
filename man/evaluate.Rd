@@ -40,10 +40,9 @@ basis of selected error and regression metrics. The evaluation procedure is
 carried out \emph{n} times, thus ensuring the deduction of more reliable
 results from repeated calls to \code{\link{evaluateCycle}}.
 }
-\author{
-Florian Detsch
-}
 \seealso{
 \code{\link{evaluateCycle}}, \code{\link{eot}}.
 }
-
+\author{
+Florian Detsch
+}

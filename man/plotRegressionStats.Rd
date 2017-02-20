@@ -45,4 +45,3 @@ p
 \author{
 Florian Detsch
 }
-

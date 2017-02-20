@@ -10,8 +10,8 @@
   ext = NULL, cores = 1L, ...)
 }
 \arguments{
-\item{x}{A named \code{list} of MODIS .hdf files per product as returned by 
-\code{\link{getHdf}}.}
+\item{x}{A named \code{list} of local MODIS SDS layers per product as 
+returned by \code{\link{getHdf}}.}
 
 \item{vi}{\code{character}. Vegetation index under consideration. Currently 
 available options are "NDVI" (default) and "EVI".}
@@ -35,10 +35,9 @@ MODIS preprocessing chain including optional layer clipping, two-fold
 quality-control, fortnightly composite creation, and subsequent combination 
 of Terra and Aqua imagery into half-monthly maximum value composites .
 }
-\author{
-Florian Detsch
-}
 \seealso{
 \code{\link[raster]{crop}}, \code{\link{whittaker.raster}}.
 }
-
+\author{
+Florian Detsch
+}

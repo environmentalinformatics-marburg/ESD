@@ -56,4 +56,3 @@ raster::plot(rst[[1:12]])
 \code{\link{downloadGimms}}, \code{\link{rasterizeGimms}},
 \code{\link{monthlyComposite}}, \code{\link{whittaker.raster}}.
 }
-

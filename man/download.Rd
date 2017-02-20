@@ -56,9 +56,6 @@ gms
 }
 
 }
-\author{
-Florian Detsch
-}
 \references{
 LP DAAC (2016) MOD13Q1: MODIS/Terra Vegetation Indices 16-Day L3 Global 250m 
 Grid SIN V006. Available online:
@@ -67,4 +64,6 @@ Grid SIN V006. Available online:
 \seealso{
 \code{\link{runGdal}}, \code{\link{downloadGimms}}.
 }
-
+\author{
+Florian Detsch
+}

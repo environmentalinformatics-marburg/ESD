@@ -42,13 +42,12 @@ prd <- downscale(pred = albGIMMS[[1:48]], resp = albMODIS[[1:48]], neot = 10L,
 plot(prd[[1:4]])                  
 
 }
-\author{
-Florian Detsch
-}
 \references{
 Appelhans T, Detsch F, Nauss T (2015) \strong{remote}: Empirical Orthogonal 
 Teleconnections in R. \emph{Journal of Statistical Software} 65(10), 1-19, 
 doi:10.18637/jss.v065.i10. Available online: 
 \url{https://www.jstatsoft.org/article/view/v065i10}.
 }
-
+\author{
+Florian Detsch
+}

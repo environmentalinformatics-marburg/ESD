@@ -22,10 +22,9 @@ This is one of the core functions of the \strong{ESD} package as it invokes
 the preprocessing chains of MODIS or GIMMS in preparation for the application
 of the EOT algorithm.
 }
-\author{
-Florian Detsch
-}
 \seealso{
 \code{\link{preprocessMODIS}}, \code{\link{preprocessGIMMS}}
 }
-
+\author{
+Florian Detsch
+}

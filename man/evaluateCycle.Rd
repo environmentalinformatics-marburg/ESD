@@ -39,9 +39,6 @@ error and regression metrics, including mean error (ME), mean absolute error
 (MAE), root-mean-square-error (RMSE) as well as correlation coefficient
 (\eqn{r}) and coefficient of determination (\eqn{R^2}).
 }
-\author{
-Florian Detsch
-}
 \references{
 Detsch F, Otte I, Appelhans T, Hemp A, Nauss T (2016) Seasonal and long-term
 vegetation dynamics from 1-km GIMMS-based NDVI time series at Mt.
@@ -52,4 +49,6 @@ doi:10.1016/j.rse.2016.03.007.
 \code{\link{evaluate}}, \code{\link{deseason}}, \code{\link{eot}}, 
 \code{\link{nXplain}}.
 }
-
+\author{
+Florian Detsch
+}

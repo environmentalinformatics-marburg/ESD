@@ -16,4 +16,3 @@ time series based on the empirical orthogonal teleconnections (EOT) method.
 Florian Detsch, Thomas Nauss
 }
 \keyword{package}
-
