@@ -9,7 +9,7 @@
 #' @title EOT-Based Spatial Downscaling
 #' @author Florian Detsch, Thomas Nauss
 #'
-#' @import gimms lattice latticeExtra methods MODIS parallel raster remote
+#' @import gimms lattice latticeExtra methods MODIS RNetCDF parallel raster remote
 #' @importFrom plotrix std.error
 #' @importFrom Rsenal number2binary
 #' @importFrom stats cor
