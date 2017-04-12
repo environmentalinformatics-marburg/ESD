@@ -85,7 +85,7 @@ mds_ppc
 cores <- parallel::detectCores() - 1
 
 ## MODIS preprocessing
-fls_ppc <- list.files("/media/fdetsch/Permanent/programming/r/MODIS/data/MCD13A1.006/whittaker/", 
+fls_ppc <- list.files("/media/permanent/programming/r/MODIS/data/MCD13A1.006/whittaker/", 
                       pattern = "yL5000.*.tif$", full.names = TRUE)
 fls_ppc <- fls_ppc[sapply(c("2015001", "2015015"), function(i) grep(i, fls_ppc))]
 mds_ppc <- raster::stack(fls_ppc)
@@ -101,12 +101,11 @@ gms_ppc
 
 ```{r preprocess_gimms-eval, echo = FALSE}
 ## GIMMS preprocessing
-fls_ppc <- list.files("/media/fdetsch/Permanent/programming/r/MODIS/data/NDVI3g.v1", 
+fls_ppc <- list.files("/media/permanent/programming/r/MODIS/data/NDVI3g.v1", 
                       pattern = "yL5000.*.tif$", full.names = TRUE)
 fls_ppc <- fls_ppc[sapply(c("2015001", "2015015"), function(i) grep(i, fls_ppc))]
 gms_ppc <- raster::stack(fls_ppc)
 gms_ppc
-
 ```
 
 <hr>

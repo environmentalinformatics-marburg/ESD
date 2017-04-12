@@ -14,10 +14,9 @@ library(devtools)
 install_github("environmentalinformatics-marburg/ESD")
 ```
 
-Additional dependencies which are not (yet) officially on CRAN include
+Additional dependencies which are not (yet) officially on CRAN currently include
 
-+ **Rsenal** (`install_github("environmentalinformatics-marburg/Rsenal")`) and 
-+ **MODIS** (`install_github("MatMatt/MODIS", ref = "release")`).
++ **Rsenal** (`install_github("environmentalinformatics-marburg/Rsenal")`).
 
 <hr>
 
@@ -40,30 +39,30 @@ mds
 ```
 ## $MOD13A1.006
 ## $MOD13A1.006$`2015-01-01`
-## [1] "/media/fdetsch/Permanent/programming/r/MODIS/MODIS_ARC/PROCESSED/MCD13A1.006_Alb/MOD13A1.A2015001.500m_16_days_NDVI.tif"                     
-## [2] "/media/fdetsch/Permanent/programming/r/MODIS/MODIS_ARC/PROCESSED/MCD13A1.006_Alb/MOD13A1.A2015001.500m_16_days_VI_Quality.tif"               
-## [3] "/media/fdetsch/Permanent/programming/r/MODIS/MODIS_ARC/PROCESSED/MCD13A1.006_Alb/MOD13A1.A2015001.500m_16_days_composite_day_of_the_year.tif"
-## [4] "/media/fdetsch/Permanent/programming/r/MODIS/MODIS_ARC/PROCESSED/MCD13A1.006_Alb/MOD13A1.A2015001.500m_16_days_pixel_reliability.tif"        
+## [1] "/media/permanent/programming/r/MODIS/MODIS_ARC/PROCESSED/MCD13A1.006_Alb/MOD13A1.A2015001.500m_16_days_NDVI.tif"                     
+## [2] "/media/permanent/programming/r/MODIS/MODIS_ARC/PROCESSED/MCD13A1.006_Alb/MOD13A1.A2015001.500m_16_days_VI_Quality.tif"               
+## [3] "/media/permanent/programming/r/MODIS/MODIS_ARC/PROCESSED/MCD13A1.006_Alb/MOD13A1.A2015001.500m_16_days_composite_day_of_the_year.tif"
+## [4] "/media/permanent/programming/r/MODIS/MODIS_ARC/PROCESSED/MCD13A1.006_Alb/MOD13A1.A2015001.500m_16_days_pixel_reliability.tif"        
 ## 
 ## $MOD13A1.006$`2015-01-17`
-## [1] "/media/fdetsch/Permanent/programming/r/MODIS/MODIS_ARC/PROCESSED/MCD13A1.006_Alb/MOD13A1.A2015017.500m_16_days_NDVI.tif"                     
-## [2] "/media/fdetsch/Permanent/programming/r/MODIS/MODIS_ARC/PROCESSED/MCD13A1.006_Alb/MOD13A1.A2015017.500m_16_days_VI_Quality.tif"               
-## [3] "/media/fdetsch/Permanent/programming/r/MODIS/MODIS_ARC/PROCESSED/MCD13A1.006_Alb/MOD13A1.A2015017.500m_16_days_composite_day_of_the_year.tif"
-## [4] "/media/fdetsch/Permanent/programming/r/MODIS/MODIS_ARC/PROCESSED/MCD13A1.006_Alb/MOD13A1.A2015017.500m_16_days_pixel_reliability.tif"        
+## [1] "/media/permanent/programming/r/MODIS/MODIS_ARC/PROCESSED/MCD13A1.006_Alb/MOD13A1.A2015017.500m_16_days_NDVI.tif"                     
+## [2] "/media/permanent/programming/r/MODIS/MODIS_ARC/PROCESSED/MCD13A1.006_Alb/MOD13A1.A2015017.500m_16_days_VI_Quality.tif"               
+## [3] "/media/permanent/programming/r/MODIS/MODIS_ARC/PROCESSED/MCD13A1.006_Alb/MOD13A1.A2015017.500m_16_days_composite_day_of_the_year.tif"
+## [4] "/media/permanent/programming/r/MODIS/MODIS_ARC/PROCESSED/MCD13A1.006_Alb/MOD13A1.A2015017.500m_16_days_pixel_reliability.tif"        
 ## 
 ## 
 ## $MYD13A1.006
 ## $MYD13A1.006$`2015-01-09`
-## [1] "/media/fdetsch/Permanent/programming/r/MODIS/MODIS_ARC/PROCESSED/MCD13A1.006_Alb/MYD13A1.A2015009.500m_16_days_NDVI.tif"                     
-## [2] "/media/fdetsch/Permanent/programming/r/MODIS/MODIS_ARC/PROCESSED/MCD13A1.006_Alb/MYD13A1.A2015009.500m_16_days_VI_Quality.tif"               
-## [3] "/media/fdetsch/Permanent/programming/r/MODIS/MODIS_ARC/PROCESSED/MCD13A1.006_Alb/MYD13A1.A2015009.500m_16_days_composite_day_of_the_year.tif"
-## [4] "/media/fdetsch/Permanent/programming/r/MODIS/MODIS_ARC/PROCESSED/MCD13A1.006_Alb/MYD13A1.A2015009.500m_16_days_pixel_reliability.tif"        
+## [1] "/media/permanent/programming/r/MODIS/MODIS_ARC/PROCESSED/MCD13A1.006_Alb/MYD13A1.A2015009.500m_16_days_NDVI.tif"                     
+## [2] "/media/permanent/programming/r/MODIS/MODIS_ARC/PROCESSED/MCD13A1.006_Alb/MYD13A1.A2015009.500m_16_days_VI_Quality.tif"               
+## [3] "/media/permanent/programming/r/MODIS/MODIS_ARC/PROCESSED/MCD13A1.006_Alb/MYD13A1.A2015009.500m_16_days_composite_day_of_the_year.tif"
+## [4] "/media/permanent/programming/r/MODIS/MODIS_ARC/PROCESSED/MCD13A1.006_Alb/MYD13A1.A2015009.500m_16_days_pixel_reliability.tif"        
 ## 
 ## $MYD13A1.006$`2015-01-25`
-## [1] "/media/fdetsch/Permanent/programming/r/MODIS/MODIS_ARC/PROCESSED/MCD13A1.006_Alb/MYD13A1.A2015025.500m_16_days_NDVI.tif"                     
-## [2] "/media/fdetsch/Permanent/programming/r/MODIS/MODIS_ARC/PROCESSED/MCD13A1.006_Alb/MYD13A1.A2015025.500m_16_days_VI_Quality.tif"               
-## [3] "/media/fdetsch/Permanent/programming/r/MODIS/MODIS_ARC/PROCESSED/MCD13A1.006_Alb/MYD13A1.A2015025.500m_16_days_composite_day_of_the_year.tif"
-## [4] "/media/fdetsch/Permanent/programming/r/MODIS/MODIS_ARC/PROCESSED/MCD13A1.006_Alb/MYD13A1.A2015025.500m_16_days_pixel_reliability.tif"
+## [1] "/media/permanent/programming/r/MODIS/MODIS_ARC/PROCESSED/MCD13A1.006_Alb/MYD13A1.A2015025.500m_16_days_NDVI.tif"                     
+## [2] "/media/permanent/programming/r/MODIS/MODIS_ARC/PROCESSED/MCD13A1.006_Alb/MYD13A1.A2015025.500m_16_days_VI_Quality.tif"               
+## [3] "/media/permanent/programming/r/MODIS/MODIS_ARC/PROCESSED/MCD13A1.006_Alb/MYD13A1.A2015025.500m_16_days_composite_day_of_the_year.tif"
+## [4] "/media/permanent/programming/r/MODIS/MODIS_ARC/PROCESSED/MCD13A1.006_Alb/MYD13A1.A2015025.500m_16_days_pixel_reliability.tif"
 ```
 
 
@@ -75,7 +74,7 @@ gms
 ```
 
 ```
-## [1] "/media/fdetsch/Permanent/programming/r/MODIS/MODIS_ARC/PROCESSED/NDVI3g.v1_alb/ndvi3g_geo_v1_2015_0106.nc4"
+## [1] "/media/permanent/programming/r/MODIS/MODIS_ARC/PROCESSED/NDVI3g.v1_alb/ndvi3g_geo_v1_2015_0106.nc4"
 ```
 
 <hr>
