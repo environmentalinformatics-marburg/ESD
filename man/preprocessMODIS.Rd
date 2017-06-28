@@ -7,7 +7,7 @@
 \title{MODIS Preprocessing Chain}
 \usage{
 \S4method{preprocessMODIS}{list}(x, vi = c("NDVI", "EVI"), dsn = getwd(),
-  ext = NULL, cores = 1L, ...)
+  ext = NULL, interval = "fortnight", whit = TRUE, cores = 1L, ...)
 }
 \arguments{
 \item{x}{A named \code{list} of local MODIS SDS layers per product as 
@@ -21,6 +21,11 @@ available options are "NDVI" (default) and "EVI".}
 \item{ext}{\code{Extent}, or any object from which an \code{Extent} can be
 extracted, see \code{\link[raster]{crop}}. If missing, layer clipping is 
 skipped.}
+
+\item{interval}{See \code{\link{temporalComposite}}.}
+
+\item{whit}{\code{logical}. \code{TRUE} (default) invokes gap-filling via 
+modified Whittaker smoothing, see \code{\link{whittaker.raster}}.}
 
 \item{cores}{\code{integer}. Number of cores for parallel processing.}
 

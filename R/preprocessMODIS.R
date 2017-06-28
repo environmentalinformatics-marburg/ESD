@@ -20,6 +20,9 @@ if ( !isGeneric("preprocessMODIS") ) {
 #' @param ext \code{Extent}, or any object from which an \code{Extent} can be
 #' extracted, see \code{\link[raster]{crop}}. If missing, layer clipping is 
 #' skipped.
+#' @param interval See \code{\link{temporalComposite}}.
+#' @param whit \code{logical}. \code{TRUE} (default) invokes gap-filling via 
+#' modified Whittaker smoothing, see \code{\link{whittaker.raster}}.
 #' @param cores \code{integer}. Number of cores for parallel processing.
 #' @param ... Additional arguments passed to \code{\link{whittaker.raster}}
 #' (except for 'vi' and 'outDirPath').
@@ -75,6 +78,8 @@ setMethod("preprocessMODIS",
                    vi = c("NDVI", "EVI"),
                    dsn = getwd(),
                    ext = NULL,
+                   interval = "fortnight",
+                   whit = TRUE,
                    cores = 1L,
                    ...) {
             
@@ -86,6 +91,8 @@ setMethod("preprocessMODIS",
             
   ## parallelization
   cl <- parallel::makePSOCKcluster(cores)
+  on.exit(parallel::stopCluster(cl))
+  
   jnk <- parallel::clusterEvalQ(cl, {
     library(raster)
     library(MODIS)
@@ -248,8 +255,8 @@ setMethod("preprocessMODIS",
     
     ### fortnightly aggregation -----
     
-    rst_mvc <- MODIS::temporalComposite(rst_qc2, rst_crp[[4]], "fortnight",
-                                        cores = cores)
+    rst_mvc <- MODIS::temporalComposite(rst_qc2, rst_crp[[4]], 
+                                        interval = interval, cores = cores)
     
     ## write to disk
     dir_mvc <- paste0(dir_prd, "/mvc")
@@ -309,14 +316,15 @@ setMethod("preprocessMODIS",
   
   ### apply whittaker smoother -----
   
-  ## target folder and files
-  dir_wht <- paste0(dir_mcd, "/whittaker")
-  if (!dir.exists(dir_wht)) dir.create(dir_wht)
-  
-  lst_wht <- MODIS::whittaker.raster(rst_mcd, outDirPath = dir_wht, ...)
-  rst_wht <- raster::stack(lst_wht)
-  
-  ## deregister parallel backend and return results
-  parallel::stopCluster(cl)
-  return(rst_wht)
+  if (whit) {
+    ## target folder and files
+    dir_wht <- paste0(dir_mcd, "/whittaker")
+    if (!dir.exists(dir_wht)) dir.create(dir_wht)
+    
+    lst_wht <- MODIS::whittaker.raster(rst_mcd, outDirPath = dir_wht, ...)
+    rst_wht <- raster::stack(lst_wht)
+    return(rst_wht)
+    
+  } else 
+    return(rst_mcd)
 })
