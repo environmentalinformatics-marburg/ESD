@@ -10,7 +10,7 @@ if ( !isGeneric("preprocessMODIS") ) {
 #' of Terra and Aqua imagery into half-monthly maximum value composites .
 #'
 #' @param x A named \code{list} of local MODIS SDS layers per product as 
-#' returned by \code{\link{getHdf}}.
+#' returned by \code{\link{runGdal}}.
 #' @param vi \code{character}. Vegetation index under consideration. Currently 
 #' available options are "NDVI" (default) and "EVI".
 #' @param dsn \code{character}. Target folder for file output.
@@ -215,31 +215,39 @@ setMethod("preprocessMODIS",
       if (file.exists(fls_qc2[i])) {
         raster::raster(fls_qc2[i])
       } else {
-        raster::overlay(rst_qc1[[i]], rst_crp[[3]][[i]],
-                        fun = function(x, y) {
-                          id <- sapply(y[], function(k) {
-                            bin <- Rsenal::number2binary(k, 16, TRUE)
-                            quality <- substr(bin, 15, 16)
-                            
-                            if (quality == "00") {
-                              return(TRUE)
-                            } else if (quality %in% c("10", "11")) {
-                              return(FALSE)
-                            } else {
-                              useful <- !substr(bin, 11, 14) %in% c("1101", "1110")
-                              aerosol <- substr(bin, 9, 10) != "11"
-                              adjacent <- substr(bin, 8, 8) == "0"
-                              mixed <- substr(bin, 6, 6) == "0"
-                              snow <- substr(bin, 2, 2) == "0"
-                              shadow <- substr(bin, 1, 1) == "0"
-                              
-                              all(useful, aerosol, adjacent, mixed, snow, shadow)
-                            }
-                          })
-                          
-                          x[!id] <- NA
-                          return(x)
-                        }, filename = fls_qc2[i], overwrite = TRUE, format = "GTiff")
+        
+        ## substring start and stop positions
+        mat = matrix(c(11, 14
+                       , 9, 10
+                       , 8, 8
+                       , 6, 6
+                       , 2, 2
+                       , 1, 1), nc = 3, byrot = TRUE)
+        
+        ## reference values
+        ref = list(c("0000", "0001", "0010", "0100", "1000"
+                     , "1001", "1010", "1100", "1111")
+                   , c("00", "01", "10")
+                   , "0"
+                   , "0"
+                   , "0"
+                   , "0")
+        
+        
+        raster::overlay(rst_qc1[[i]], rst_crp[[3]][[i]], fun = function(x, y) {
+          
+          bin <- R.utils::intToBin(y[])
+          quality <- substr(bin, 15, 16)
+          
+          flags = sapply(1:nrow(mat), function(z) {
+            substr(bin, mat[z, 1], mat[z, 2]) %in% ref[[z]]
+          })
+          
+          ids = (quality == "00") | (quality == "01" & all(flags))
+          
+          x[!ids] <- NA
+          return(x)
+        }, filename = fls_qc2[i], overwrite = TRUE, format = "GTiff")
       }
     })
     

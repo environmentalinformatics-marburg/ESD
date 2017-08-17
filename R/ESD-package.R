@@ -11,7 +11,6 @@
 #'
 #' @import gimms lattice latticeExtra methods MODIS RNetCDF parallel raster remote
 #' @importFrom plotrix std.error
-#' @importFrom Rsenal number2binary
 #' @importFrom stats cor
 #' @importFrom utils write.csv
 #'

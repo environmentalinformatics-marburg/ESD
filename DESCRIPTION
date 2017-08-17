@@ -16,8 +16,7 @@ Imports:
     parallel,
     plotrix,
     remote,
-    RNetCDF (>= 1.6),
-    Rsenal
+    RNetCDF (>= 1.6)
 License: GPL (>= 3) | file LICENSE
 LazyData: TRUE
 RoxygenNote: 6.0.1
