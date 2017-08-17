@@ -40,7 +40,7 @@ evaluate <- function(pred, resp, n = 10L, var = NULL, by = 24L, times = 10L,
   lst_scores <- lapply(1:times, function(h) {
 
     # status message
-    cat("Iteration #", h, "...\n", sep = "")
+    cat(ifelse(h == 1, "", "\n"), "Iteration #", h, "...\n", sep = "")
 
     # indices of training dataset
     indices <- do.call("c", lapply(1:by, function(i) {
