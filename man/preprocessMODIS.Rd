@@ -11,7 +11,7 @@
 }
 \arguments{
 \item{x}{A named \code{list} of local MODIS SDS layers per product as 
-returned by \code{\link{getHdf}}.}
+returned by \code{\link{runGdal}}.}
 
 \item{vi}{\code{character}. Vegetation index under consideration. Currently 
 available options are "NDVI" (default) and "EVI".}
